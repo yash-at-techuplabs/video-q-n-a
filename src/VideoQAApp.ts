@@ -297,6 +297,9 @@ export class VideoQAApp {
         videoElement.playsInline = true;
         videoElement.setAttribute('playsinline', 'true');
         videoElement.setAttribute('webkit-playsinline', 'true');
+        
+        // Mirror video for front camera (selfie mode)
+        this.updateVideoMirror();
       }
     } catch (err) {
       console.error('Error accessing camera:', err);
@@ -483,13 +486,25 @@ export class VideoQAApp {
     await this.startCamera();
   }
 
-  private toggleNotes(): void {
-    const questionOverlay = document.querySelector('.absolute.top-16') as HTMLElement;
-    if (questionOverlay) {
-      const notesSection = questionOverlay.querySelector('#notesInput')?.parentElement;
-      if (notesSection) {
-        notesSection.classList.toggle('hidden');
+  private updateVideoMirror(): void {
+    const videoElement = this.elements.videoElement as HTMLVideoElement;
+    if (videoElement) {
+      if (this.state.facingMode === 'user') {
+        // Front camera - mirror the video (selfie mode)
+        videoElement.style.transform = 'scaleX(-1)';
+        videoElement.classList.add('mirrored');
+      } else {
+        // Rear camera - normal orientation
+        videoElement.style.transform = 'scaleX(1)';
+        videoElement.classList.remove('mirrored');
       }
+    }
+  }
+
+  private toggleNotes(): void {
+    const notesSection = document.getElementById('notesSection');
+    if (notesSection) {
+      notesSection.classList.toggle('hidden');
     }
   }
 

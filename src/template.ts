@@ -86,7 +86,7 @@ export function createAppHTML(): string {
                 </div>
 
                 <!-- Question Overlay -->
-                <div class="question-overlay absolute top-2 sm:top-4 left-2 right-2 sm:left-4 sm:right-4 bg-black/70 backdrop-blur-sm rounded-lg p-3 sm:p-4 text-white">
+                <div class="question-overlay absolute top-2 sm:top-4 left-2 right-2 sm:left-4 sm:right-4 bg-black/70 backdrop-blur-sm rounded-lg p-3 sm:p-4 text-white max-w-sm mx-auto">
                     <h3 class="font-semibold mb-2 text-blue-400 text-sm sm:text-base">Step <span id="currentStep">1</span> of <span id="totalSteps">3</span></h3>
                     <p id="currentQuestion" class="text-base sm:text-lg"></p>
                     <div id="notesSection" class="mt-3 sm:mt-4 bg-black/50 rounded-lg p-2 sm:p-3 hidden">

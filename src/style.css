@@ -158,6 +158,12 @@ html, body {
         -webkit-playsinline: true;
         playsinline: true;
         object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    
+    /* Video mirroring for front camera */
+    video.mirrored {
+        transform: scaleX(-1);
     }
     
     /* Fix iOS Safari video issues */
@@ -197,10 +203,38 @@ html, body {
     /* Adjust for mobile browser bars */
     .question-overlay {
         top: max(0.5rem, env(safe-area-inset-top, 0.5rem)) !important;
+        max-height: 40vh;
+        overflow-y: auto;
     }
     
     .bottom-controls {
         bottom: max(0, env(safe-area-inset-bottom, 0)) !important;
         padding-bottom: max(1rem, env(safe-area-inset-bottom, 1rem)) !important;
+        min-height: 120px;
+    }
+    
+    /* Ensure proper spacing between elements */
+    .question-overlay {
+        z-index: 10;
+    }
+    
+    .bottom-controls {
+        z-index: 20;
+    }
+    
+    /* Prevent overlap on small screens */
+    @media (max-height: 600px) {
+        .question-overlay {
+            max-height: 30vh;
+            font-size: 0.875rem;
+        }
+        
+        .question-overlay h3 {
+            font-size: 0.75rem;
+        }
+        
+        .question-overlay p {
+            font-size: 0.875rem;
+        }
     }
 }
