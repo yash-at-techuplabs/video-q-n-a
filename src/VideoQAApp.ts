@@ -183,8 +183,8 @@ export class VideoQAApp {
     
     // Set the video preview source
     if (this.elements.recordingPreview && this.state.currentRecording) {
-      this.elements.recordingPreview.src = this.state.currentRecording.videoUrl;
-      this.elements.recordingPreview.load(); // Reload the video element
+      (this.elements.recordingPreview as HTMLVideoElement).src = this.state.currentRecording.videoUrl;
+      (this.elements.recordingPreview as HTMLVideoElement).load(); // Reload the video element
     }
   }
 
