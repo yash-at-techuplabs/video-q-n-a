@@ -72,7 +72,7 @@ export function createAppHTML(): string {
 
     <!-- Main App -->
     <div id="appContainer" class="hidden">
-        <div class="w-full h-screen flex flex-col overflow-hidden">
+        <div class="w-full h-screen flex flex-col overflow-hidden" style="height: 100vh; height: 100dvh;">
             <!-- Video Container with Full Height -->
             <div class="relative w-full h-full flex flex-col overflow-hidden">
                 <video id="videoElement" autoplay muted playsinline webkit-playsinline class="w-full h-full object-cover"></video>
@@ -86,7 +86,7 @@ export function createAppHTML(): string {
                 </div>
 
                 <!-- Question Overlay -->
-                <div class="absolute top-4 left-4 right-4 bg-black/70 backdrop-blur-sm rounded-lg p-3 sm:p-4 text-white">
+                <div class="question-overlay absolute top-2 sm:top-4 left-2 right-2 sm:left-4 sm:right-4 bg-black/70 backdrop-blur-sm rounded-lg p-3 sm:p-4 text-white">
                     <h3 class="font-semibold mb-2 text-blue-400 text-sm sm:text-base">Step <span id="currentStep">1</span> of <span id="totalSteps">3</span></h3>
                     <p id="currentQuestion" class="text-base sm:text-lg"></p>
                     <div id="notesSection" class="mt-3 sm:mt-4 bg-black/50 rounded-lg p-2 sm:p-3 hidden">
@@ -100,7 +100,7 @@ export function createAppHTML(): string {
                 </div>
 
                 <!-- Bottom Controls -->
-                <div class="absolute bottom-0 left-0 right-0 p-4 sm:p-6 bg-gradient-to-t from-black/70 to-transparent">
+                <div class="bottom-controls absolute bottom-0 left-0 right-0 p-4 sm:p-6 bg-gradient-to-t from-black/70 to-transparent">
                     <!-- Timer above record button -->
                     <div class="flex justify-center mb-3 sm:mb-4">
                         <div id="recordingIndicator" class="flex items-center gap-2 text-white opacity-0">
