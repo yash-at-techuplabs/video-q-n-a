@@ -81,6 +81,7 @@ export class VideoQAApp {
     this.updateTotalQuestions();
     this.updateQuestion();
     this.checkMobileCompatibility();
+    this.setupBeforeUnloadWarning();
   }
 
   private checkMobileCompatibility(): void {
@@ -108,6 +109,18 @@ export class VideoQAApp {
     console.log('Supported MIME types:');
     supportedTypes.forEach(type => {
       console.log(`${type}: ${MediaRecorder.isTypeSupported(type)}`);
+    });
+  }
+
+  private setupBeforeUnloadWarning(): void {
+    window.addEventListener('beforeunload', (e) => {
+      // Only show warning if user is currently recording or has unsaved recording
+      if (this.state.isRecording || this.state.currentRecording) {
+        const message = 'Any unsaved changes will be lost. Are you sure you want to leave?';
+        e.preventDefault();
+        e.returnValue = message;
+        return message;
+      }
     });
   }
 
@@ -149,14 +162,6 @@ export class VideoQAApp {
 
   private async requestCameraPermission(): Promise<void> {
     try {
-      // Show a message to user about camera permission
-      const userConfirmed = confirm('This app needs access to your camera and microphone to record videos. Click OK to continue.');
-      
-      if (!userConfirmed) {
-        alert('Camera access is required to use this app. Please refresh and try again.');
-        return;
-      }
-
       await this.startCamera();
     } catch (err) {
       console.error('Error requesting camera permission:', err);
