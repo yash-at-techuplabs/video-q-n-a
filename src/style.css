@@ -139,4 +139,34 @@ button:active {
         margin: 1rem;
         max-height: calc(100vh - 2rem);
     }
+    
+    /* Ensure video plays inline on mobile */
+    video {
+        -webkit-playsinline: true;
+        playsinline: true;
+        object-fit: cover;
+    }
+    
+    /* Fix iOS Safari video issues */
+    video::-webkit-media-controls-panel {
+        display: none !important;
+    }
+    
+    /* Better button visibility on mobile */
+    button:active {
+        transform: scale(0.95);
+        transition: transform 0.1s ease;
+    }
+    
+    /* Improve recording button visibility */
+    #recordButton {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Better backdrop for mobile */
+    .backdrop-blur-sm {
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+    }
 }

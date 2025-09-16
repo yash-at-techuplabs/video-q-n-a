@@ -75,7 +75,7 @@ export function createAppHTML(): string {
         <div class="w-full h-screen flex flex-col overflow-hidden">
             <!-- Video Container with Full Height -->
             <div class="relative w-full h-full flex flex-col overflow-hidden">
-                <video id="videoElement" autoplay muted class="w-full h-full object-cover"></video>
+                <video id="videoElement" autoplay muted playsinline webkit-playsinline class="w-full h-full object-cover"></video>
 
                 <!-- Countdown Overlay -->
                 <div id="countdownOverlay" class="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden">

@@ -80,6 +80,35 @@ export class VideoQAApp {
   public initialize(): void {
     this.updateTotalQuestions();
     this.updateQuestion();
+    this.checkMobileCompatibility();
+  }
+
+  private checkMobileCompatibility(): void {
+    // Check if MediaRecorder is supported
+    if (!window.MediaRecorder) {
+      alert('Your browser does not support video recording. Please use a modern browser like Chrome, Firefox, or Safari.');
+      return;
+    }
+
+    // Check if getUserMedia is supported
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      alert('Your browser does not support camera access. Please use a modern browser.');
+      return;
+    }
+
+    // Log supported MIME types for debugging
+    const supportedTypes = [
+      'video/webm;codecs=vp9,opus',
+      'video/webm;codecs=vp8,opus',
+      'video/webm',
+      'video/mp4',
+      'video/ogg;codecs=theora,vorbis'
+    ];
+
+    console.log('Supported MIME types:');
+    supportedTypes.forEach(type => {
+      console.log(`${type}: ${MediaRecorder.isTypeSupported(type)}`);
+    });
   }
 
   private updateTotalQuestions(): void {
@@ -113,7 +142,26 @@ export class VideoQAApp {
 
     this.hideModal('userInfoModal');
     this.showElement('appContainer');
-    this.startCamera();
+    
+    // Start camera after user interaction (required for mobile)
+    this.requestCameraPermission();
+  }
+
+  private async requestCameraPermission(): Promise<void> {
+    try {
+      // Show a message to user about camera permission
+      const userConfirmed = confirm('This app needs access to your camera and microphone to record videos. Click OK to continue.');
+      
+      if (!userConfirmed) {
+        alert('Camera access is required to use this app. Please refresh and try again.');
+        return;
+      }
+
+      await this.startCamera();
+    } catch (err) {
+      console.error('Error requesting camera permission:', err);
+      alert('Could not access camera. Please ensure you have granted camera permissions.');
+    }
   }
 
   private handleRestart(): void {
@@ -223,22 +271,36 @@ export class VideoQAApp {
         this.state.videoStream.getTracks().forEach(track => track.stop());
       }
 
-      this.state.videoStream = await navigator.mediaDevices.getUserMedia({
+      // Mobile-optimized camera constraints
+      const constraints = {
         video: {
           facingMode: this.state.facingMode,
-          width: { ideal: 1280 },
-          height: { ideal: 720 }
+          // Use more flexible constraints for mobile
+          width: { min: 320, ideal: 640, max: 1280 },
+          height: { min: 240, ideal: 480, max: 720 },
+          frameRate: { ideal: 30, max: 60 }
         },
-        audio: true
-      });
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true
+        }
+      };
+
+      this.state.videoStream = await navigator.mediaDevices.getUserMedia(constraints);
 
       const videoElement = this.elements.videoElement as HTMLVideoElement;
       if (videoElement) {
         videoElement.srcObject = this.state.videoStream;
+        // Ensure video plays on mobile
+        videoElement.muted = true;
+        videoElement.playsInline = true;
+        videoElement.setAttribute('playsinline', 'true');
+        videoElement.setAttribute('webkit-playsinline', 'true');
       }
     } catch (err) {
       console.error('Error accessing camera:', err);
-      alert('Could not access the camera. Please ensure you have granted camera permissions.');
+      alert('Could not access the camera. Please ensure you have granted camera permissions and are using a supported browser.');
     }
   }
 
@@ -301,9 +363,23 @@ export class VideoQAApp {
     this.state.recordedChunks = [];
 
     try {
-      this.state.mediaRecorder = new MediaRecorder(this.state.videoStream, {
-        mimeType: 'video/webm;codecs=vp9,opus'
-      });
+      // Check for supported MIME types (mobile compatibility)
+      let mimeType = 'video/webm;codecs=vp9,opus';
+      if (!MediaRecorder.isTypeSupported(mimeType)) {
+        mimeType = 'video/webm;codecs=vp8,opus';
+        if (!MediaRecorder.isTypeSupported(mimeType)) {
+          mimeType = 'video/webm';
+          if (!MediaRecorder.isTypeSupported(mimeType)) {
+            mimeType = 'video/mp4';
+            if (!MediaRecorder.isTypeSupported(mimeType)) {
+              mimeType = ''; // Let browser choose
+            }
+          }
+        }
+      }
+
+      const options = mimeType ? { mimeType } : {};
+      this.state.mediaRecorder = new MediaRecorder(this.state.videoStream, options);
 
       this.state.mediaRecorder.ondataavailable = (event) => {
         if (event.data.size > 0) {
@@ -315,7 +391,14 @@ export class VideoQAApp {
         this.saveRecording();
       };
 
-      this.state.mediaRecorder.start(100);
+      this.state.mediaRecorder.onerror = (event) => {
+        console.error('MediaRecorder error:', event);
+        alert('Recording error occurred. Please try again.');
+        this.stopRecording();
+      };
+
+      // Use larger time slice for mobile stability
+      this.state.mediaRecorder.start(1000);
       this.state.isRecording = true;
       this.updateRecordButton();
       this.showElement('recordingIndicator');
@@ -323,7 +406,7 @@ export class VideoQAApp {
       // Start countdown timer
       this.startCountdownTimer();
 
-      // Set up auto-stop timer (2 minutes max)
+      // Set up auto-stop timer (1 minute max)
       this.recordingTimer = window.setTimeout(() => {
         this.stopRecording();
       }, this.MAX_RECORDING_TIME);
