@@ -32,7 +32,7 @@ export function createAppHTML(): string {
                             id="userName" 
                             required 
                             placeholder="Eg. Henry Ford"
-                            class="w-full h-12 sm:h-[38px] px-3 sm:px-4 py-3 border border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors"
+                            class="w-full h-12 sm:h-[38px] px-3 sm:px-4 py-3 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors"
                         >
                     </div>
                     
@@ -43,7 +43,7 @@ export function createAppHTML(): string {
                             id="userEmail" 
                             required 
                             placeholder="Eg. henry@ford.com"
-                            class="w-full h-12 sm:h-[38px] px-3 sm:px-4 py-3 border border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors"
+                            class="w-full h-12 sm:h-[38px] px-3 sm:px-4 py-3 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors"
                         >
                     </div>
 
@@ -86,7 +86,7 @@ export function createAppHTML(): string {
                 </div>
 
                 <!-- Question Overlay -->
-                <div class="question-overlay absolute top-2 sm:top-4 left-2 right-2 sm:left-4 sm:right-4 bg-black/70 backdrop-blur-sm rounded-lg p-3 sm:p-4 text-white max-w-sm mx-auto">
+                <div class="question-overlay absolute top-2 sm:top-4 left-2 right-2 sm:left-4 sm:right-4 bg-black/70 backdrop-blur-sm rounded-lg p-3 sm:p-4 text-white max-w-md mx-auto">
                     <h3 class="font-semibold mb-2 text-blue-400 text-sm sm:text-base">Step <span id="currentStep">1</span> of <span id="totalSteps">3</span></h3>
                     <p id="currentQuestion" class="text-base sm:text-lg"></p>
                     <div id="notesSection" class="mt-3 sm:mt-4 bg-black/50 rounded-lg p-2 sm:p-3 hidden">
@@ -133,7 +133,7 @@ export function createAppHTML(): string {
 
     <!-- Recording Confirmation Modal -->
     <div id="recordingConfirmationModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 hidden">
-        <div class="bg-white rounded-2xl p-4 sm:p-6 mx-2 sm:mx-4 max-w-sm w-full text-center max-h-[90vh] overflow-y-auto">
+        <div class="bg-white rounded-2xl p-4 sm:p-6 mx-2 sm:mx-4 max-w-lg w-full text-center max-h-[90vh] overflow-y-auto flex flex-col">
             <!-- Step indicator -->
             <div class="flex items-center justify-center mb-3 sm:mb-4">
                 <div class="w-1 h-4 sm:h-6 bg-blue-500 rounded-full mr-2 sm:mr-3"></div>
@@ -144,8 +144,8 @@ export function createAppHTML(): string {
             <p id="confirmationQuestion" class="text-sm sm:text-lg font-medium text-gray-400 mb-3 sm:mb-4">Tell us about yourself and your background.</p>
             
             <!-- Video Preview -->
-            <div class="mb-3 sm:mb-4">
-                <video id="recordingPreview" class="w-full h-32 sm:h-48 bg-gray-100 rounded-lg object-cover" controls>
+            <div class="mb-3 sm:mb-4 flex-1 flex items-center">
+                <video id="recordingPreview" class="w-full h-64 sm:h-80 bg-gray-100 rounded-lg object-cover" controls controlsList="nodownload" style="background: #f3f4f6;">
                     Your browser does not support the video tag.
                 </video>
             </div>

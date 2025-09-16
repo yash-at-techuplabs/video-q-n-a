@@ -166,16 +166,73 @@ html, body {
         transform: scaleX(-1);
     }
     
-    /* Fix iOS Safari video issues */
-    video::-webkit-media-controls-panel {
+    /* Video controls visibility for recording preview */
+    #recordingPreview {
+        background: #f3f4f6 !important;
+    }
+    
+    #recordingPreview::-webkit-media-controls-panel {
+        background: rgba(0, 0, 0, 0.8) !important;
+        border-radius: 0 0 0.5rem 0.5rem;
+        opacity: 1 !important;
+    }
+    
+    #recordingPreview::-webkit-media-controls-play-button,
+    #recordingPreview::-webkit-media-controls-timeline,
+    #recordingPreview::-webkit-media-controls-current-time-display,
+    #recordingPreview::-webkit-media-controls-time-remaining-display {
+        color: white !important;
+    }
+    
+    /* Ensure controls are always visible */
+    #recordingPreview:hover::-webkit-media-controls-panel,
+    #recordingPreview:focus::-webkit-media-controls-panel {
+        opacity: 1 !important;
+    }
+    
+    /* Fix iOS Safari video issues - hide controls for main video only */
+    #videoElement::-webkit-media-controls-panel {
         display: none !important;
     }
     
-    /* Better button visibility on mobile */
-    button:active {
-        transform: scale(0.95);
-        transition: transform 0.1s ease;
+    /* Ensure recording preview controls are visible */
+    #recordingPreview::-webkit-media-controls-panel {
+        display: flex !important;
     }
+    
+/* Better button visibility on mobile */
+button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+}
+
+/* Form input text visibility fix */
+input[type="text"], 
+input[type="email"], 
+input[type="password"], 
+textarea {
+    color: #111827 !important; /* text-gray-900 */
+    background-color: #ffffff !important;
+    -webkit-text-fill-color: #111827 !important;
+}
+
+input[type="text"]::placeholder, 
+input[type="email"]::placeholder, 
+input[type="password"]::placeholder, 
+textarea::placeholder {
+    color: #6b7280 !important; /* text-gray-500 */
+    -webkit-text-fill-color: #6b7280 !important;
+}
+
+/* Fix for autofill styling */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: #111827 !important;
+    color: #111827 !important;
+}
     
     /* Improve recording button visibility */
     #recordButton {
@@ -208,7 +265,7 @@ html, body {
     }
     
     .bottom-controls {
-        bottom: max(0, env(safe-area-inset-bottom, 0)) !important;
+        bottom: 0 !important;
         padding-bottom: max(1rem, env(safe-area-inset-bottom, 1rem)) !important;
         min-height: 120px;
     }
@@ -235,6 +292,23 @@ html, body {
         
         .question-overlay p {
             font-size: 0.875rem;
+        }
+    }
+    
+    /* Additional mobile positioning fixes */
+    @media (max-width: 480px) {
+        .bottom-controls {
+            bottom: 0 !important;
+            padding-bottom: max(1.5rem, env(safe-area-inset-bottom, 1.5rem)) !important;
+        }
+    }
+    
+    /* Fix for very small screens */
+    @media (max-height: 500px) {
+        .bottom-controls {
+            bottom: 0 !important;
+            padding-bottom: max(1rem, env(safe-area-inset-bottom, 1rem)) !important;
+            min-height: 100px;
         }
     }
 }
