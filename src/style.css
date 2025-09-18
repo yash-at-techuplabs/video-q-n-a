@@ -239,6 +239,17 @@ input:-webkit-autofill:active {
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         border: 2px solid rgba(255, 255, 255, 0.2);
     }
+
+    /* Make bottom controls larger on mobile */
+    .bottom-controls .w-10, .bottom-controls .w-12, .bottom-controls .w-14 {
+        width: 64px !important;
+        height: 64px !important;
+    }
+
+    .bottom-controls .w-14 > div, .bottom-controls .w-16 > div, .bottom-controls .w-12 > div {
+        width: 40px !important;
+        height: 40px !important;
+    }
     
     /* Better backdrop for mobile */
     .backdrop-blur-sm {

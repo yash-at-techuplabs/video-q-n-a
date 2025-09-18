@@ -234,10 +234,24 @@ export class VideoQAApp {
       this.elements.confirmationQuestion.textContent = currentQuestion.text;
     }
     
-    // Set the video preview source
+    // Set the video preview source and ensure it's playable on mobile (playsinline, muted)
     if (this.elements.recordingPreview && this.state.currentRecording) {
-      (this.elements.recordingPreview as HTMLVideoElement).src = this.state.currentRecording.videoUrl;
-      (this.elements.recordingPreview as HTMLVideoElement).load(); // Reload the video element
+      const preview = this.elements.recordingPreview as HTMLVideoElement;
+      preview.src = this.state.currentRecording.videoUrl;
+      preview.muted = false; // allow audio during preview
+      preview.controls = true;
+      preview.playsInline = true;
+      preview.setAttribute('playsinline', 'true');
+      preview.setAttribute('webkit-playsinline', 'true');
+      // Remove mirroring for preview to avoid mirrored-black overlay issues on Android
+      preview.style.transform = 'scaleX(1)';
+
+      // Try to load and play (play may be blocked without user gesture; controls will allow user to play)
+      preview.load();
+      // Attempt to play silently to warm up controls (catch errors silently)
+      preview.play().catch(() => {
+        // ignore - user can tap play
+      });
     }
   }
 

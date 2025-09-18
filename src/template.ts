@@ -29,6 +29,7 @@ export function createAppHTML(): string {
                         <label for="userName" class="block text-sm font-medium text-gray-700 mb-2">Name</label>
                         <input 
                             type="text" 
+                            value="Henry Ford"
                             id="userName" 
                             required 
                             placeholder="Eg. Henry Ford"
@@ -40,6 +41,7 @@ export function createAppHTML(): string {
                         <label for="userEmail" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
                         <input 
                             type="email" 
+                            value="henry@ford.com"
                             id="userEmail" 
                             required 
                             placeholder="Eg. henry@ford.com"
@@ -50,6 +52,7 @@ export function createAppHTML(): string {
                     <div class="flex items-start space-x-3 pt-2">
                         <input 
                             type="checkbox" 
+                            checked
                             id="permissionCheckbox" 
                             required
                             class="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
