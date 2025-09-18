@@ -103,9 +103,9 @@ export function createAppHTML(): string {
                 </div>
 
                 <!-- Bottom Controls -->
-                <div class="bottom-controls absolute bottom-0 left-0 right-0 p-4 sm:p-6 bg-gradient-to-t from-black/70 to-transparent">
+                <div class="bottom-controls absolute bottom-0 left-0 right-0 pb-8 sm:pb-8 bg-gradient-to-t from-black/70 to-transparent">
                     <!-- Timer above record button -->
-                    <div class="flex justify-center mb-3 sm:mb-4">
+                    <div class="flex justify-center">
                         <div id="recordingIndicator" class="flex items-center gap-2 text-white opacity-0">
                             <div class="w-2 h-2 bg-red-500 rounded-full"></div>
                             <span id="recordingTimer" class="text-sm font-mono">00:00</span>

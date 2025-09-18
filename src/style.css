@@ -69,10 +69,6 @@ input[type="checkbox"]:checked {
         left: 1rem;
         right: 1rem;
     }
-    
-    .absolute.bottom-0 {
-        padding: 1.5rem;
-    }
 
     #userInfoModal .max-w-md {
         max-width: 95%;
@@ -98,6 +94,7 @@ button:active {
 #notesInput:focus {
     outline: none;
     background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
 }
 
 /* Smooth transitions */
@@ -172,7 +169,6 @@ html, body {
     }
     
     #recordingPreview::-webkit-media-controls-panel {
-        background: rgba(0, 0, 0, 0.8) !important;
         border-radius: 0 0 0.5rem 0.5rem;
         opacity: 1 !important;
     }
@@ -207,14 +203,6 @@ button:active {
 }
 
 /* Form input text visibility fix */
-input[type="text"], 
-input[type="email"], 
-input[type="password"], 
-textarea {
-    color: #111827 !important; /* text-gray-900 */
-    background-color: #ffffff !important;
-    -webkit-text-fill-color: #111827 !important;
-}
 
 input[type="text"]::placeholder, 
 input[type="email"]::placeholder, 
@@ -238,17 +226,6 @@ input:-webkit-autofill:active {
     #recordButton {
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         border: 2px solid rgba(255, 255, 255, 0.2);
-    }
-
-    /* Make bottom controls larger on mobile */
-    .bottom-controls .w-10, .bottom-controls .w-12, .bottom-controls .w-14 {
-        width: 64px !important;
-        height: 64px !important;
-    }
-
-    .bottom-controls .w-14 > div, .bottom-controls .w-16 > div, .bottom-controls .w-12 > div {
-        width: 40px !important;
-        height: 40px !important;
     }
     
     /* Better backdrop for mobile */
