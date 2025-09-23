@@ -410,6 +410,7 @@ export class VideoQAApp {
       this.state.isRecording = true;
       this.updateRecordButton();
       this.showElement('recordingIndicator');
+      this.updateCameraFlipButtonVisibility();
 
       // Start countdown timer
       this.startCountdownTimer();
@@ -431,6 +432,7 @@ export class VideoQAApp {
       this.state.isRecording = false;
       this.updateRecordButton();
       this.hideElement('recordingIndicator');
+      this.updateCameraFlipButtonVisibility();
       
       // Clear the timers
       if (this.recordingTimer) {
@@ -502,6 +504,17 @@ export class VideoQAApp {
         // Rear camera - normal orientation
         videoElement.style.transform = 'scaleX(1)';
         videoElement.classList.remove('mirrored');
+      }
+    }
+  }
+
+  private updateCameraFlipButtonVisibility(): void {
+    const flipButton = this.elements.flipCameraButton;
+    if (flipButton) {
+      if (this.state.isRecording) {
+        flipButton.style.display = 'none';
+      } else {
+        flipButton.style.display = 'flex';
       }
     }
   }
