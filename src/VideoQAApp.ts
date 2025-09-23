@@ -177,6 +177,8 @@ export class VideoQAApp {
   }
 
   private handleRetryRecording(): void {
+    // Pause video before hiding modal
+    this.pauseRecordingPreview();
     this.hideModal('recordingConfirmationModal');
     
     // Discard the current recording
@@ -193,6 +195,8 @@ export class VideoQAApp {
   }
 
   private handleConfirmRecording(): void {
+    // Pause video before hiding modal
+    this.pauseRecordingPreview();
     this.hideModal('recordingConfirmationModal');
     
     // Save the confirmed recording
@@ -560,6 +564,18 @@ export class VideoQAApp {
     if (modal) {
       modal.classList.add('hidden');
       modal.classList.remove('hs-overlay-open:opacity-100');
+      
+      // Pause video preview when hiding recording confirmation modal
+      if (modalId === 'recordingConfirmationModal') {
+        this.pauseRecordingPreview();
+      }
+    }
+  }
+
+  private pauseRecordingPreview(): void {
+    const previewVideo = this.elements.recordingPreview as HTMLVideoElement;
+    if (previewVideo && !previewVideo.paused) {
+      previewVideo.pause();
     }
   }
 
